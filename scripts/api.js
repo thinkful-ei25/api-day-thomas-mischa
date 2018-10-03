@@ -6,8 +6,6 @@ const api = (function(){
   
   function getItems(callback){
     $.getJSON(`${BASE_URL}/items`, callback);
-
-    callback();
   }
 
   function createItem(name, callback){
@@ -19,10 +17,22 @@ const api = (function(){
       data: newItem,
       success: callback
     });
-
   }
+  function updateItem(id, updateData, callback){
+    updateData = JSON.stringify(updateData);
+    $.ajax({
+      url: `${BASE_URL}/items/${id}`,
+      method: 'PATCH',
+      contentType: 'application/json',
+      data: updateData,
+      success: callback,
+    });
+  }
+
+  
   return {
     getItems,
     createItem,
+    updateItem,
   };
 }());
