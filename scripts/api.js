@@ -1,9 +1,8 @@
 'use strict';
-/* global $ */
+/* global $ store */
 
 const api = (function(){
   const BASE_URL = 'https://thinkful-list-api.herokuapp.com/thomas-mischa';
-  
   function getItems(callback){
     $.getJSON(`${BASE_URL}/items`, callback);
   }
@@ -15,7 +14,7 @@ const api = (function(){
       method: 'POST',
       contentType: 'application/json',
       data: newItem,
-      success: callback
+      success: callback || alert('fail')
     });
   }
   function updateItem(id, updateData, callback){
@@ -26,13 +25,26 @@ const api = (function(){
       contentType: 'application/json',
       data: updateData,
       success: callback,
+      error: (err) => {
+        store.error = err.statusText;
+        alert(store.error);
+      },
+
     });
   }
 
+  function deleteItem(id, callback){
+    $.ajax({
+      url: `${BASE_URL}/items/${id}`,
+      method: 'DELETE',
+      success: callback,
+    });
+  }
   
   return {
     getItems,
     createItem,
     updateItem,
+    deleteItem,
   };
 }());

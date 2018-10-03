@@ -1,5 +1,5 @@
 'use strict';
-/* global store, $ */
+/* global store, $ api */
 
 // eslint-disable-next-line no-unused-vars
 const shoppingList = (function(){
@@ -88,10 +88,18 @@ const shoppingList = (function(){
       const item = store.items.find((item) => id === item.id);
       console.log(item.checked);
       const checkedStatus = !item.checked; 
-      api.updateItem(id, {checked: checkedStatus}, () => {
-        store.findAndUpdate(id, {checked: checkedStatus});
-        render();
-      });
+      api.updateItem(
+        id, 
+        {checked: checkedStatus}, 
+        () => {
+          store.findAndUpdate(id, {checked: checkedStatus});
+          render();
+        }
+        // (err)=>{
+        //   store.error = err;
+        //   console.log(err.message);
+        // }
+      );
     });
   }
   
@@ -101,9 +109,10 @@ const shoppingList = (function(){
       // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
       // delete the item
-      store.findAndDelete(id);
-      // render the updated shopping list
-      render();
+      api.deleteItem(id, ()=>{
+        store.findAndDelete(id);
+        render();
+      });
     });
   }
   
