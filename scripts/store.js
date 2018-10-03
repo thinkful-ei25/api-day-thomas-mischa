@@ -11,23 +11,32 @@ const store = (function(){
     return this.items.find(item => item.id === id);
   };
 
-  const findAndToggleChecked = function(id) {
-    const item = this.findById(id);
-    item.checked = !item.checked;
-  };
+  // const findAndToggleChecked = function(id) {
+  //   const item = this.findById(id);
+  //   item.checked = !item.checked;
+  // };
 
   const findAndDelete = function(id) {
     this.items = this.items.filter(item => item.id !== id);
   };
 
-  const findAndUpdateName = function(id, name) {
-    try {
-      Item.validateName(name);
-      const item = this.findById(id);
-      item.name = name;
-    } catch(e) {
-      console.log('Cannot update name: ' + e.message);
-    }
+  // const findAndUpdateName = function(id, name) {
+  //   try {
+  //     Item.validateName(name);
+  //     const item = this.findById(id);
+  //     item.name = name;
+  //   } catch(e) {
+  //     console.log('Cannot update name: ' + e.message);
+  //   }
+  // };
+
+  // {name: 'apples', checked: false}
+  const findAndUpdate = function(id, newData){
+    let item = this.items.find((item) => id === item.id);
+    //get keys from newData  in arrayKeys
+    //for each key item.key = newData.key
+    item = Object.assign(item, newData);
+    console.log(item);
   };
 
   const toggleCheckedFilter = function() {
@@ -49,9 +58,10 @@ const store = (function(){
     searchTerm: '',
     addItem,
     findById,
-    findAndToggleChecked,
+    // findAndToggleChecked,
     findAndDelete,
-    findAndUpdateName,
+    // findAndUpdateName,
+    findAndUpdate,
     toggleCheckedFilter,
     setSearchTerm,
     setItemIsEditing,

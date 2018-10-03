@@ -12,6 +12,9 @@ api.getItems((items) => {
 });
 
 // test code starts
-api.getItems((items) => {
-  
-});
+// api.getItems(()=>{
+//   const item = store.items[0];
+//   console.log('current name: ' + item.name);
+//   store.findAndUpdate(item.id, { name: 'bar' });
+//   console.log('new name: ' + item.name);
+// });
